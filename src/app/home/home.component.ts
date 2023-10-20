@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit, OnChanges {
   public stocks=[]
   public stockData: Quotes[]=[]
   stockSymbol: CompanyName[]=[]
-  public symbol=[]
+  public symbol=[];public k:number
   constructor(private userService: UserService, private dataService: DataService){}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit, OnChanges {
       {
         this.getStockData(this.stocks[i],i)
       }
+      this.k=i
   }
 
   getStockData(ele,i){
@@ -54,7 +55,8 @@ export class HomeComponent implements OnInit, OnChanges {
     });
       if (this.stock.valid) {
           this.userService.addStocks(this.stock.value)
-          this.getStockData(this.stock.value,1)
+          this.getStockData(this.stock.value,this.k)
+          this.k=this.k+1
           this.stock.reset('');
       }
   }
